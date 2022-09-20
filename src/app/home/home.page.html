@@ -1,0 +1,72 @@
+<ion-content [fullscreen]="true">
+  <div *ngIf="homePage">
+    <div *ngIf="loading" class="container-loading">
+      <ng-lottie class="loading" [options]="options"></ng-lottie>
+    </div>
+
+    <img class="logo" src="../../assets/img/logo.png" alt="">
+
+    <ion-searchbar class="custom" [(ngModel)]="searchTerm" placeholder="Pesquisar Pokemóns :)" showCancelButton="focus"
+      animated>
+    </ion-searchbar>
+    <div class="container">
+
+      <div class="card-pokemon" [class.bg-grass]="pokemon.types[0].type.name == 'grass'"
+        [class.bg-water]="pokemon.types[0].type.name == 'water'" [class.bg-fire]="pokemon.types[0].type.name == 'fire'"
+        [class.bg-normal]="pokemon.types[0].type.name == 'normal'" [class.bg-bug]="pokemon.types[0].type.name == 'bug'"
+        *ngFor="let pokemon of pokemons | filter: searchTerm" (click)="selectPokemon(pokemon)">
+        <div>
+          <p class="name">
+            {{pokemon.name}}
+          </p>
+          <p *ngFor="let types of pokemon.types" class="type-class">
+            {{types.type.name}}
+          </p>
+        </div>
+        <div class="bubble">
+          <img class="image-pokemon" [src]="pokemon.sprites.other.home.front_default" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="detailsPage" class="container-details">
+    <div class="height-adjust" [class.bg-grass]="selectedPokemon.types[0].type.name == 'grass'"
+      [class.bg-water]="selectedPokemon.types[0].type.name == 'water'" [class.bg-fire]="selectedPokemon.types[0].type.name == 'fire'"
+      [class.bg-normal]="selectedPokemon.types[0].type.name == 'normal'" [class.bg-bug]="selectedPokemon.types[0].type.name == 'bug'">
+      <div class="flex-between">
+        <ion-icon (click)="togglePage()" name="chevron-back"></ion-icon>
+        <ion-icon [name]="favorite ? 'heart' :'heart-outline'"></ion-icon>
+      </div>
+
+      <p class="title">
+        {{selectedPokemon.name}}
+      </p>
+      <p *ngFor="let types of selectedPokemon.types" class="type-class">
+        {{types.type.name}}
+      </p>
+      <div class="container-image-details">
+        <img class="image-details" [src]="selectedPokemon.sprites.other.home.front_default" alt="">
+      </div>
+    </div>
+    <div class="radius-container">
+      <p class="title-section">Infos</p>
+      <div class="flex-items-section">
+        <p>Base Experience:</p>
+        <p>{{selectedPokemon.base_experience}}</p>
+      </div>
+      <div class="flex-items-section">
+        <p>Height:</p>
+        <p>{{selectedPokemon.height}}</p>
+      </div>
+      <div>
+        <p class="title-section">Stats</p>
+        <div *ngFor="let stats of selectedPokemon.stats" class="flex-items-section">
+          <p>{{stats.stat.name}}:</p>
+          <p>{{stats.base_stat}}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ion-content>

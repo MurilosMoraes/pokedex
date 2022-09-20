@@ -1,0 +1,19 @@
+<ion-content>
+  <div *ngIf="loading" class="container-loading">
+    <ng-lottie class="loading" [options]="options" ></ng-lottie>
+  </div>
+
+  <div class="container">
+      <h1 class="title">
+        Bem vindo a
+        <br>
+        <span class="poke-title">
+          Pokedex
+        </span>
+      </h1>
+    <img class="lobby-img" src="../../assets/img/lobby.png" alt="">
+    <button (click)="toHome()" class="btn-lobby">
+      Vamos lá!
+    </button>
+  </div>
+</ion-content>
